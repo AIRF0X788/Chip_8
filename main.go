@@ -10,7 +10,7 @@ import (
 
 func run() {
 	cfg := pixelgl.WindowConfig{
-		Title:  "Chip-8 Emulator",
+		Title:  "Chip-8",
 		Bounds: pixel.R(0, 0, 640, 320),
 		VSync:  true,
 	}
