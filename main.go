@@ -1,45 +1,32 @@
 package main
 
 import (
-	"github.com/faiface/pixel"
-	"github.com/faiface/pixel/pixelgl"
-	"github.com/faiface/pixel/text"
-	"golang.org/x/image/colornames"
-	"golang.org/x/image/font/basicfont"
+	"chip/functions"
+	"log"
+	"os"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func run() {
-	cfg := pixelgl.WindowConfig{
-		Title:  "Chip-8",
-		Bounds: pixel.R(0, 0, 640, 320),
-		VSync:  true,
-	}
-	win, err := pixelgl.NewWindow(cfg)
-	if err != nil {
-		panic(err)
-	}
-
-	atlas := text.NewAtlas(basicfont.Face7x13, text.ASCII)
-	txt := text.New(pixel.V(10, 10), atlas)
-	txt.Color = colornames.White
-
-	for !win.Closed() {
-		win.Clear(colornames.Black)
-
-		txt.Draw(win, pixel.IM)
-
-		win.Update()
-	}
-}
+const gfxMultiplier = 10
+const chscreenWidth = 64
+const chscreenHeight = 32
+const gfxWidth = chscreenWidth * gfxMultiplier
+const gfxHeight = chscreenHeight * gfxMultiplier
 
 func main() {
-	pixelgl.Run(run)
-}
+	if len(os.Args) < 2 {
+		log.Fatal("Usage: goc8 [c8 file name]")
+	}
 
-import (
-	"github.com/faiface/pixel"
-)
+	programName := os.Args[1]
 
-func main(){
-	
+	chip := functions.NewChip8()
+	chip.LoadApplication(programName)
+
+	ebiten.SetWindowSize(gfxWidth, gfxHeight)
+	ebiten.SetWindowTitle(programName)
+	if err := ebiten.RunGame(chip); err != nil {
+		log.Fatal(err)
+	}
 }
