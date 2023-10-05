@@ -22,3 +22,5 @@ func (c *Chip8) input() {
 		ebiten.IsKeyPressed(ebiten.KeyV),
 	}
 }
+
+//
