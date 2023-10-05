@@ -20,3 +20,5 @@ func (g *Chip8) Draw(screen *ebiten.Image) {
 		}
 	}
 }
+
+//
